@@ -19,9 +19,9 @@
 
 | # | Name | Roll | Role | Machine | Private IP |
 |---|------|------|------|---------|-----------|
-| 1 | **Hardik Hathwal** | — | DNS Server + Client | Mac 1 | `10.7.7.36` |
+| 1 | **Hardik Hathwal** | 2401010176 | DNS Server + Client | Mac 1 | `10.7.7.36` |
 | 2 | **Abuzar Haider** | — | Nginx HTTPS Reverse Proxy / Load Balancer | Mac 2 | `10.7.19.243` |
-| 3 | **Kabir Sharma** | — | Backend Server A | Mac 3 | `10.7.21.89` |
+| 3 | **Kabir Sharma** | 2401010205 | Backend Server A | Mac 3 | `10.7.21.89` |
 | 4 | **Ayush Tiwari** | — | Backend Server B + Client | Mac 4 | `10.7.24.95` |
 
 **Network:** iPhone Hotspot LAN &nbsp;·&nbsp; **Subnet:** `10.7.0.0/19` (255.255.224.0) &nbsp;·&nbsp; **Gateway:** `10.7.0.1`
