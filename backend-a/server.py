@@ -42,11 +42,10 @@ class Handler(BaseHTTPRequestHandler):
             body = {
                 "status": "ok",
                 "backend": BACKEND,
-                "server": "Mac 3 — Kabir Sharma",
-                "ip": "10.7.21.89",
+                "server": "Mac 3",
                 "port": PORT
             }
-            data = json.dumps(body, indent=2).encode()
+            data = (json.dumps(body) + "\n").encode()
 
             self.send_response(200)
             self.send_common_headers()
