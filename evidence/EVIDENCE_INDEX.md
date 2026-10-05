@@ -1,5 +1,5 @@
 ## Evidence Index — Team Kuch_Nahi
-### Computer Networks Project
+### Computer Networks Project — Phase 1
 
 Place your screenshots and Wireshark captures in the subfolders below.
 Rename files exactly as listed so the evaluator can find them within 30 seconds.
@@ -44,13 +44,3 @@ Rename files exactly as listed so the evaluator can find them within 30 seconds.
 | `screenshots/failure-demo/D3-before-failure.png` | Load balancing A+B before stopping Backend A | D3 |
 | `screenshots/failure-demo/D3-backend-a-stopped.png` | Only X-Backend: B after killing Backend A | D3 |
 | `screenshots/failure-demo/D3-after-restore.png` | A+B alternating after restarting Backend A | D3 |
-
-### Phase 2 Evidence
-
-| File | Content |
-|------|---------|
-| `screenshots/dns/P2-backup-dns-failover.png` | Backup DNS still resolves when Mac 1 is stopped |
-| `screenshots/dns/P2-ttl-old-cache.png` | Old cached DNS answer during TTL window |
-| `screenshots/dns/P2-ttl-new-answer.png` | New DNS answer after TTL expires |
-| `screenshots/failure-demo/P2-firewall-mac2-ok.png` | Mac 2 curl to backend succeeds (allowed) |
-| `screenshots/failure-demo/P2-firewall-client-blocked.png` | Client curl to backend times out (blocked) |
