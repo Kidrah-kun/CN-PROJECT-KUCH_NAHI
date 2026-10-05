@@ -1,0 +1,57 @@
+# OpenSSL Configuration — TLS Certificate for app.Kuch_Nahi.test
+# Computer Networks Project — Team Kuch_Nahi
+# Machine: Mac 2 (Abuzar Haider)
+#
+# This file is used to generate a self-signed certificate with SAN
+# (Subject Alternative Names) so curl -v works WITHOUT -k.
+#
+# ─── How to use ──────────────────────────────────────────────
+#
+# Step 1 — Create directory on Mac 2:
+#   mkdir -p ~/cn-project/certs && cd ~/cn-project/certs
+#
+# Step 2 — Create CA key and self-signed root certificate:
+#   openssl genrsa -out ca.key 4096
+#   openssl req -x509 -new -nodes -key ca.key -sha256 -days 365 \
+#     -out ca.crt \
+#     -subj "/C=IN/ST=Delhi/L=Delhi/O=CN-Project/OU=KuchNahi/CN=CN Project Root CA"
+#
+# Step 3 — Create server key + CSR using this config file:
+#   openssl genrsa -out server.key 2048
+#   openssl req -new -key server.key -out server.csr -config server.cnf
+#
+# Step 4 — Sign the CSR with the CA:
+#   openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key \
+#     -CAcreateserial -out server.crt -days 365 -sha256 \
+#     -extensions req_ext -extfile server.cnf
+#
+# Step 5 — Verify SAN:
+#   openssl x509 -in server.crt -text -noout | grep -A2 "Subject Alternative"
+#
+# Step 6 — Trust CA on ALL Macs (run on each machine):
+#   sudo security add-trusted-cert -d -r trustRoot \
+#     -k /Library/Keychains/System.keychain ~/Downloads/ca.crt
+#
+# ─────────────────────────────────────────────────────────────
+
+[req]
+default_bits       = 2048
+prompt             = no
+default_md         = sha256
+distinguished_name = dn
+req_extensions     = req_ext
+
+[dn]
+C  = IN
+ST = Delhi
+L  = Delhi
+O  = CN-Project
+OU = KuchNahi
+CN = app.Kuch_Nahi.test
+
+[req_ext]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = app.Kuch_Nahi.test
+DNS.2 = api.Kuch_Nahi.test

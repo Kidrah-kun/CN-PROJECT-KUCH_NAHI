@@ -1,0 +1,41 @@
+# .gitignore — Computer Networks Project — Team Kuch_Nahi
+
+# ─── TLS Private Keys (NEVER commit these) ────────────────────
+*.key
+*.pem
+ca.key
+server.key
+*.p12
+*.pfx
+
+# ─── Wireshark captures (large binary files — store on Drive) ─
+*.pcapng
+*.pcap
+
+# ─── macOS system files ───────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# ─── Python ───────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+
+# ─── Node (if used) ───────────────────────────────────────────
+node_modules/
+
+# ─── Editor files ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── Homebrew cache ───────────────────────────────────────────
+*.log
