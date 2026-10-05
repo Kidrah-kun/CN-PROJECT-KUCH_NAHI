@@ -10,37 +10,31 @@ Rename files exactly as listed so the evaluator can find them within 30 seconds.
 
 | File | Content | Form Field |
 |------|---------|-----------|
-| `screenshots/dns/A1-ip-inventory.png` | `networksetup -getinfo "Wi-Fi"` from all 4 Macs | A1 |
-| `screenshots/dns/A2-dnsmasq-config.png` | `grep` output of dnsmasq.conf key lines | A2 |
-| `screenshots/dns/A3-dig-private-domain.png` | Full `dig app.Kuch_Nahi.test` output (SERVER=10.7.7.36) | A3 |
-| `screenshots/dns/A4-google-dns-nxdomain.png` | Full `dig @8.8.8.8 app.Kuch_Nahi.test` → NXDOMAIN | A4 |
-| `screenshots/ping/A5-ping-all-pairs.png` | All 6 pairwise ping results, 0% loss | A5 |
+| `screenshots/dns/A1-Hardik-Hathwal-IP.jpg` <br> `screenshots/dns/A1-Abuzar-Haider-IP.png` <br> `screenshots/dns/A1-Kabir-Sharma-IP.jpg` <br> `screenshots/dns/A1-Ayush-Tiwari-IP.jpg` | `networksetup -getinfo "Wi-Fi"` from all 4 Macs | A1 |
+| `screenshots/dns/A3-dig-private-domain.jpg` | Full `dig app.Kuch_Nahi.test` output (SERVER=10.7.7.36) | A3 |
+| `screenshots/dns/A4-google-dns-nxdomain.jpg` | Full `dig @8.8.8.8 app.Kuch_Nahi.test` → NXDOMAIN | A4 |
+| `screenshots/ping/A5-mac-1-ping.jpg` <br> `screenshots/ping/A5-mac-2-ping.jpg` <br> `screenshots/ping/A5-mac-3-ping.jpg` <br> `screenshots/ping/A5-mac-4-ping.jpg` | All 6 pairwise ping results, 0% loss | A5 |
 
 ### Section B — HTTPS & nginx Evidence
 
 | File | Content | Form Field |
 |------|---------|-----------|
-| `screenshots/tls/B1-https-curl-v.png` | Full `curl -v https://app.Kuch_Nahi.test:8443/` (no -k) | B1 |
-| `screenshots/load-balancing/B2-load-balancing-6.png` | 6 requests showing alternating X-Backend: A / B | B2 |
-| `screenshots/load-balancing/B3-nginx-config.png` | nginx.conf showing upstream + ssl + proxy_pass | B3 |
+| `screenshots/tls/B1-https-curl-v-A.jpg` <br> `screenshots/tls/B1-https-curl-v-B.jpg` | Full `curl -v https://app.Kuch_Nahi.test:8443/` (no -k) | B1 |
+| `screenshots/load-balancing/B2-load-balancing-6.jpg` | 6 requests showing alternating X-Backend: A / B | B2 |
 
 ### Section C — Wireshark Captures
 
 | File | Content | Form Field |
 |------|---------|-----------|
-| `wireshark/dns-capture.pcapng` | Raw Wireshark DNS capture file | C1 |
-| `screenshots/dns/C1-wireshark-dns.png` | DNS query/response screenshot (filter: dns) | C1 |
-| `wireshark/tcp-handshake.pcapng` | Raw Wireshark TCP capture | C2 |
-| `screenshots/tcp/C2-wireshark-tcp-handshake.png` | SYN→SYN-ACK→ACK (filter: tcp.flags.syn==1) | C2 |
-| `wireshark/tls-handshake.pcapng` | Raw Wireshark TLS capture | C3 |
-| `screenshots/tls/C3-wireshark-tls.png` | ClientHello→Certificate→AppData (filter: tls) | C3 |
+| `screenshots/dns/C1-wireshark-dns.jpg` | DNS query/response screenshot (filter: dns) | C1 |
+| `screenshots/tcp/C2-wireshark-tcp-handshake.jpg` | SYN→SYN-ACK→ACK (filter: tcp.flags.syn==1) | C2 |
+| `screenshots/tls/C3-wireshark-tls.jpg` | ClientHello→Certificate→AppData (filter: tls) | C3 |
 
 ### Section D — Caching & Failure Evidence
 
 | File | Content | Form Field |
 |------|---------|-----------|
-| `screenshots/caching/D1-cache-headers.png` | `curl -sI` response headers with Cache-Control + ETag | D1 |
-| `screenshots/caching/D1-304-not-modified.png` | 304 Not Modified response | D1 |
-| `screenshots/failure-demo/D3-before-failure.png` | Load balancing A+B before stopping Backend A | D3 |
-| `screenshots/failure-demo/D3-backend-a-stopped.png` | Only X-Backend: B after killing Backend A | D3 |
-| `screenshots/failure-demo/D3-after-restore.png` | A+B alternating after restarting Backend A | D3 |
+| `screenshots/caching/D1-cache-headers.jpg` | `curl -sI` response headers with Cache-Control + ETag | D1 |
+| `screenshots/caching/D1-304-not-modified.jpg` | 304 Not Modified response | D1 |
+| `screenshots/failure-demo/D3-before-failure.jpg` | Load balancing A+B before stopping Backend A | D3 |
+| `screenshots/failure-demo/D3-backend-a-stopped.jpg` | Only X-Backend: B after killing Backend A | D3 |
