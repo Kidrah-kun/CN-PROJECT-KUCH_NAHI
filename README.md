@@ -19,10 +19,10 @@
 
 | # | Name | Roll | Role | Machine | Private IP |
 |---|------|------|------|---------|-----------|
-| 1 | **Hardik Hathwal** | 2401010176 | DNS Server + Client | Mac 1 | `10.7.7.36` |
-| 2 | **Abuzar Haider** | 2401010024 | Nginx HTTPS Reverse Proxy / Load Balancer | Mac 2 | `10.7.19.243` |
-| 3 | **Kabir Sharma** | 2401010205 | Backend Server A | Mac 3 | `10.7.21.89` |
-| 4 | **Ayush Tiwari** | 2401010121 | Backend Server B + Client | Mac 4 | `10.7.24.95` |
+| 1 | **Hardik Hathwal** | 2401010176 | DNS Server + Client | Mac 1 | `10.7.6.152` |
+| 2 | **Abuzar Haider** | 2401010024 | Nginx HTTPS Reverse Proxy / Load Balancer | Mac 2 | `10.7.31.75` |
+| 3 | **Kabir Sharma** | 2401010205 | Backend Server A | Mac 3 | `10.7.11.100` |
+| 4 | **Ayush Tiwari** | 2401010121 | Backend Server B + Client | Mac 4 | `10.7.15.153` |
 
 **Network:** iPhone Hotspot LAN &nbsp;·&nbsp; **Subnet:** `10.7.0.0/19` (255.255.224.0) &nbsp;·&nbsp; **Gateway:** `10.7.0.1`
 
@@ -37,17 +37,17 @@
          │  Mac 1 — Hardik                Mac 2 — Abuzar        │
          │  Private DNS                   nginx Edge            │
          │  dnsmasq · UDP 53              HTTPS · TCP 8443      │
-         │  10.7.7.36                     10.7.19.243           │
+         │  10.7.6.152                     10.7.31.75           │
          │      │                               │               │
          │      │  app.Kuch_Nahi.test           │               │
-         │      │  → 10.7.19.243               │               │
+         │      │  → 10.7.31.75               │               │
          │      │                        ┌──────┴──────┐        │
          │      │                        │             │        │
          │  Mac 3 — Kabir           Mac 4 — Ayush               │
          │  Backend A               Backend B + Client          │
          │  Python REST             Python REST + curl          │
          │  TCP 3001                TCP 3002                    │
-         │  10.7.21.89              10.7.24.95                  │
+         │  10.7.11.100              10.7.15.153                  │
          └──────────────────────────────────────────────────────┘
 
 Full Request Flow:
@@ -55,9 +55,9 @@ Full Request Flow:
   Client (Mac 3 or Mac 4)
        │
        ▼  dig app.Kuch_Nahi.test
-  Mac 1 — dnsmasq (UDP 53)  ──returns 10.7.19.243──►
+  Mac 1 — dnsmasq (UDP 53)  ──returns 10.7.31.75──►
        │
-       ▼  HTTPS request to 10.7.19.243:8443
+       ▼  HTTPS request to 10.7.31.75:8443
   Mac 2 — nginx (TLS terminated)
        │  Round-robin load balance
        ├───────────────────────────────────┐
@@ -154,13 +154,13 @@ cp configs/dnsmasq/dnsmasq.conf /opt/homebrew/etc/dnsmasq.conf
 sudo brew services restart dnsmasq
 
 # Verify
-dig @10.7.7.36 app.Kuch_Nahi.test
-# ANSWER SECTION: 10.7.19.243
+dig @10.7.6.152 app.Kuch_Nahi.test
+# ANSWER SECTION: 10.7.31.75
 ```
 
 **Configure client Macs (Mac 2, 3, 4) to use Mac 1 DNS:**
 ```bash
-sudo networksetup -setdnsservers "Wi-Fi" 10.7.7.36
+sudo networksetup -setdnsservers "Wi-Fi" 10.7.6.152
 sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder
 ```
 
@@ -196,7 +196,7 @@ sudo lsof -nP -iTCP:8443 -sTCP:LISTEN   # verify listening
 ### A3 — DNS resolution (from Mac 3 or Mac 4)
 ```bash
 dig app.Kuch_Nahi.test
-# ✅ ANSWER: 10.7.19.243  |  SERVER: 10.7.7.36#53
+# ✅ ANSWER: 10.7.31.75  |  SERVER: 10.7.6.152#53
 ```
 
 ### A4 — Prove it's a private domain
@@ -208,7 +208,7 @@ dig @8.8.8.8 app.Kuch_Nahi.test
 ### A5 — Pairwise pings
 ```bash
 # Mac 1 → others
-ping -c 4 10.7.19.243 && ping -c 4 10.7.21.89 && ping -c 4 10.7.24.95
+ping -c 4 10.7.31.75 && ping -c 4 10.7.11.100 && ping -c 4 10.7.15.153
 ```
 
 ### B1 — HTTPS proof (⚠️ NO `-k` flag)
@@ -259,7 +259,7 @@ cd backend-a && python3 server.py
 |----|----------|-----------------|
 | **A1** | Machine IPs, roles, interface | `networksetup -getinfo "Wi-Fi"` on all 4 Macs |
 | **A2** | dnsmasq config (key lines) | `grep -E '^(listen|bind|no-resolv|server=|address=|local-ttl)' dnsmasq.conf` |
-| **A3** | `dig app.Kuch_Nahi.test` from client | Shows SERVER=10.7.7.36 and ANSWER=10.7.19.243 |
+| **A3** | `dig app.Kuch_Nahi.test` from client | Shows SERVER=10.7.6.152 and ANSWER=10.7.31.75 |
 | **A4** | `dig @8.8.8.8 app.Kuch_Nahi.test` | Shows NXDOMAIN |
 | **A5** | All 6 pairwise pings | 0% packet loss on all 6 pairs |
 | **B1** | `curl -v https://app.Kuch_Nahi.test:8443/` | TLS handshake + HTTP 200, no `-k` |

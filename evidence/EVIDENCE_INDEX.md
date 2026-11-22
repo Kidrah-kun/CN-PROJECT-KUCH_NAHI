@@ -11,7 +11,7 @@ Rename files exactly as listed so the evaluator can find them within 30 seconds.
 | File | Content | Form Field |
 |------|---------|-----------|
 | `screenshots/dns/A1-Hardik-Hathwal-IP.jpg` <br> `screenshots/dns/A1-Abuzar-Haider-IP.png` <br> `screenshots/dns/A1-Kabir-Sharma-IP.jpg` <br> `screenshots/dns/A1-Ayush-Tiwari-IP.jpg` | `networksetup -getinfo "Wi-Fi"` from all 4 Macs | A1 |
-| `screenshots/dns/A3-dig-private-domain.jpg` | Full `dig app.Kuch_Nahi.test` output (SERVER=10.7.7.36) | A3 |
+| `screenshots/dns/A3-dig-private-domain.jpg` | Full `dig app.Kuch_Nahi.test` output (SERVER=10.7.6.152) | A3 |
 | `screenshots/dns/A4-google-dns-nxdomain.jpg` | Full `dig @8.8.8.8 app.Kuch_Nahi.test` → NXDOMAIN | A4 |
 | `screenshots/ping/A5-mac-1-ping.jpg` <br> `screenshots/ping/A5-mac-2-ping.jpg` <br> `screenshots/ping/A5-mac-3-ping.jpg` <br> `screenshots/ping/A5-mac-4-ping.jpg` | All 6 pairwise ping results, 0% loss | A5 |
 

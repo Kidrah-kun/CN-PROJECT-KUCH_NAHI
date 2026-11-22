@@ -3,8 +3,8 @@ Backend Server B — Port 3002
 Computer Networks Project — Team Kuch_Nahi
 Machine: Mac 4 (Ayush Tiwari)
 
-This server runs on Mac 4 (10.7.24.95).
-Nginx on Mac 2 (10.7.19.243) load-balances between:
+This server runs on Mac 4 (10.7.15.153).
+Nginx on Mac 2 (10.7.31.75) load-balances between:
   - Backend A             → Mac 3 :3001
   - Backend B (this file) → Mac 4 :3002
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     server = HTTPServer((HOST, PORT), Handler)
     print(f"\n🚀 Backend Server B running on http://{HOST}:{PORT}")
     print(f"   X-Backend: {BACKEND}")
-    print(f"   Machine: Mac 4 — Ayush Tiwari (10.7.24.95)")
+    print(f"   Machine: Mac 4 — Ayush Tiwari (10.7.15.153)")
     print(f"   Press Ctrl+C to stop\n")
     try:
         server.serve_forever()
