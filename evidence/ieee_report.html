@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IEEE Report — Team Kuch Nahi</title>
+<style>
+  /* ── IEEE-style print layout ── */
+  @import url('https://fonts.googleapis.com/css2?family=Linux+Libertine+O&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 10pt;
+    color: #000;
+    background: #fff;
+    line-height: 1.35;
+  }
+
+  /* ── Page shell ── */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 19mm 15mm 25mm 15mm;
+  }
+
+  /* ── Title block (single column) ── */
+  .title-block {
+    text-align: center;
+    margin-bottom: 10pt;
+  }
+  .title-block h1 {
+    font-size: 20pt;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 8pt;
+  }
+  .authors {
+    font-size: 11pt;
+    margin-bottom: 4pt;
+  }
+  .affiliation {
+    font-size: 9pt;
+    font-style: italic;
+    margin-bottom: 10pt;
+  }
+
+  /* ── Abstract (single column) ── */
+  .abstract-block {
+    margin: 0 auto 12pt auto;
+    max-width: 160mm;
+  }
+  .abstract-block .abstract-title {
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+    font-size: 10pt;
+    margin-bottom: 3pt;
+  }
+  .abstract-block p {
+    text-align: justify;
+    font-size: 9.5pt;
+  }
+  .keywords {
+    font-size: 9.5pt;
+    margin-top: 4pt;
+  }
+  .keywords span { font-style: italic; font-weight: bold; }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid #000;
+    margin: 8pt 0;
+  }
+
+  /* ── Two-column body ── */
+  .columns {
+    column-count: 2;
+    column-gap: 6mm;
+    column-rule: none;
+    text-align: justify;
+  }
+
+  /* ── Headings ── */
+  h2 {
+    font-size: 10pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 10pt 0 4pt 0;
+    break-after: avoid;
+  }
+  h3 {
+    font-size: 10pt;
+    font-style: italic;
+    font-weight: bold;
+    margin: 7pt 0 3pt 0;
+    break-after: avoid;
+  }
+  h4 {
+    font-size: 10pt;
+    font-weight: bold;
+    margin: 5pt 0 2pt 0;
+    break-after: avoid;
+  }
+
+  /* ── Section numbering ── */
+  .sec-num {
+    margin-right: 4pt;
+  }
+
+  p {
+    text-align: justify;
+    text-indent: 1em;
+    margin-bottom: 4pt;
+  }
+  p.noindent { text-indent: 0; }
+
+  /* ── Tables ── */
+  .tbl-wrap {
+    break-inside: avoid;
+    margin: 6pt 0;
+  }
+  .tbl-cap {
+    font-size: 9pt;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3pt;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5pt;
+  }
+  th {
+    border-top: 1.5px solid #000;
+    border-bottom: 1px solid #000;
+    padding: 2pt 4pt;
+    text-align: left;
+    font-weight: bold;
+  }
+  td {
+    padding: 2pt 4pt;
+    vertical-align: top;
+  }
+  tr:last-child td {
+    border-bottom: 1.5px solid #000;
+  }
+
+  /* ── Code / monospaced ── */
+  pre, code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 8pt;
+    background: #f8f8f8;
+    padding: 1pt 2pt;
+  }
+  pre {
+    display: block;
+    margin: 4pt 0;
+    padding: 4pt 6pt;
+    border-left: 2pt solid #ccc;
+    white-space: pre-wrap;
+    word-break: break-all;
+    break-inside: avoid;
+  }
+
+  /* ── Figure / diagram ── */
+  .fig-wrap {
+    break-inside: avoid;
+    margin: 6pt 0;
+  }
+  .fig-cap {
+    font-size: 9pt;
+    text-align: center;
+    font-style: italic;
+    margin-top: 3pt;
+  }
+  .diagram {
+    font-family: "Courier New", monospace;
+    font-size: 7.5pt;
+    white-space: pre;
+    text-align: left;
+    line-height: 1.3;
+    overflow: hidden;
+  }
+
+  /* ── Lists ── */
+  ul, ol {
+    padding-left: 1.4em;
+    margin: 3pt 0;
+    font-size: 9.5pt;
+  }
+  li { margin-bottom: 2pt; }
+
+  /* ── References ── */
+  .references p {
+    text-indent: -1.5em;
+    padding-left: 1.5em;
+    margin-bottom: 3pt;
+    font-size: 9pt;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { font-size: 10pt; }
+    .page { padding: 19mm 15mm 25mm 15mm; }
+    a { color: #000; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════ TITLE BLOCK ══════════════ -->
+  <div class="title-block">
+    <h1>Design and Evaluation of a High-Availability Private-DNS and HTTPS Reverse-Proxy Network</h1>
+    <div class="authors">
+      Hardik Hathwal<sup>1</sup>,&ensp;
+      Abuzar Haider<sup>2</sup>,&ensp;
+      Kabir Sharma<sup>3</sup>,&ensp;
+      Ayush Tiwari<sup>4</sup>
+    </div>
+    <div class="affiliation">
+      Department of Computer Science &amp; Engineering, B.Tech 2024 Batch<br>
+      <sup>1</sup>Primary DNS &amp; Client &nbsp;|&nbsp;
+      <sup>2</sup>Primary nginx HTTPS Edge &nbsp;|&nbsp;
+      <sup>3</sup>Backend A &amp; Standby Edge &nbsp;|&nbsp;
+      <sup>4</sup>Backend B, Backup DNS &amp; Test Client
+    </div>
+  </div>
+
+  <!-- ══════════════ ABSTRACT ══════════════ -->
+  <div class="abstract-block">
+    <div class="abstract-title">Abstract</div>
+    <p>
+      This paper presents the design, implementation, and evaluation of a four-node
+      private-LAN web infrastructure built entirely on commodity MacBooks connected through
+      a shared iPhone hotspot. The system delivers HTTPS-encrypted, load-balanced application
+      traffic to private hostnames resolved by a custom dnsmasq DNS server, with
+      end-to-end TLS authenticated by a self-signed Certificate Authority. Phase 2 of the
+      project extends the baseline with four resilience and security mechanisms: backup DNS
+      with automatic failover, DNS-TTL-driven edge migration (standby nginx), nginx upstream
+      health-check failover across two Python Flask backends, and pf-based zero-trust backend
+      isolation. Live demonstrations confirm that every single point of failure identified in
+      Phase 1 has been addressed. Results show sub-second DNS failover, 30-second maximum
+      edge-cutover delay (bounded by TTL), zero-error backend failover via nginx health checks,
+      and effective LAN-layer backend isolation. All artefacts—configurations, certificates,
+      evidence screenshots, and Wireshark captures—are publicly available in the team's
+      GitHub repository.
+    </p>
+    <p class="keywords noindent">
+      <span>Index Terms</span>—DNS, dnsmasq, nginx, reverse proxy, TLS, load balancing,
+      high availability, firewall, pf, DNS TTL, backend failover, private LAN.
+    </p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ══════════════ TWO-COLUMN BODY ══════════════ -->
+  <div class="columns">
+
+    <!-- ── I. INTRODUCTION ── -->
+    <h2><span class="sec-num">I.</span> Introduction</h2>
+
+    <p>
+      Modern web services rely on a layered stack—DNS resolution, TLS termination, reverse
+      proxying, and backend compute—where each layer is a potential single point of failure.
+      This project reproduces that stack at laboratory scale using four Apple MacBooks on a
+      shared private LAN and demonstrates progressive resilience hardening across two
+      evaluation phases.
+    </p>
+    <p>
+      Phase 1 established the core infrastructure: a private <code>.test</code> domain
+      resolved by dnsmasq, a self-signed CA trusted on all client machines, an nginx HTTPS
+      edge on port 8443, and two Python Flask backends load-balanced in round-robin. Phase 2
+      adds backup DNS, a standby edge with DNS-cutover, nginx upstream health checking, pf
+      packet-filter isolation of backend ports, and a structured troubleshooting playbook.
+    </p>
+    <p>
+      The remainder of the paper is organised as follows. Section II describes the system
+      architecture. Section III details the Phase 2 extensions and their experimental results.
+      Section IV presents the troubleshooting methodology. Section V maps the lab components
+      to real cloud equivalents. Section VI concludes with lessons learned.
+    </p>
+
+    <!-- ── II. SYSTEM ARCHITECTURE ── -->
+    <h2><span class="sec-num">II.</span> System Architecture</h2>
+
+    <h3>A. Physical Topology</h3>
+    <p class="noindent">
+      All four Macs share the same iPhone hotspot subnet (<code>10.7.0.0/19</code>).
+      Table&nbsp;I lists the static assignments used throughout the evaluation.
+    </p>
+
+    <div class="tbl-wrap">
+      <div class="tbl-cap">TABLE I &mdash; Node Inventory</div>
+      <table>
+        <tr>
+          <th>Owner</th><th>IP Address</th><th>Role</th>
+        </tr>
+        <tr><td>Hardik (Mac 1)</td><td>10.7.6.152</td><td>Primary DNS (dnsmasq :53)</td></tr>
+        <tr><td>Abuzar (Mac 2)</td><td>10.7.31.75</td><td>Primary nginx HTTPS Edge :8443</td></tr>
+        <tr><td>Kabir (Mac 3)</td><td>10.7.11.100</td><td>Backend A :3001, Standby Edge :8443</td></tr>
+        <tr><td>Ayush (Mac 4)</td><td>10.7.15.153</td><td>Backend B :3002, Backup DNS :53</td></tr>
+      </table>
+    </div>
+
+    <h3>B. OSI Layer Mapping</h3>
+    <div class="tbl-wrap">
+      <div class="tbl-cap">TABLE II &mdash; OSI / TCP-IP Layer Mapping</div>
+      <table>
+        <tr><th>Layer</th><th>Protocol</th><th>Component</th></tr>
+        <tr><td>7 Application</td><td>HTTP/REST</td><td>Python Flask, nginx proxy, curl</td></tr>
+        <tr><td>6 Presentation</td><td>TLS 1.2/1.3</td><td>Self-signed CA; nginx terminates TLS</td></tr>
+        <tr><td>5 Session</td><td>TCP sessions</td><td>nginx keepalive, TLS session resume</td></tr>
+        <tr><td>4 Transport</td><td>TCP</td><td>Ports 8443, 3001, 3002</td></tr>
+        <tr><td>3 Network</td><td>IPv4</td><td>10.7.0.0/19 private LAN</td></tr>
+        <tr><td>2 Data Link</td><td>802.11 Wi-Fi</td><td>MAC addresses, ARP</td></tr>
+        <tr><td>1 Physical</td><td>Wi-Fi radio</td><td>iPhone hotspot</td></tr>
+      </table>
+    </div>
+
+    <h3>C. Normal Request Flow</h3>
+    <div class="fig-wrap">
+      <div class="diagram">Client
+  │ 1. DNS query: app.Kuch_Nahi.test?
+  ▼
+dnsmasq @ 10.7.6.152:53
+  │ reply: 10.7.31.75
+  ▼
+nginx @ 10.7.31.75:8443 (TLS terminated)
+  │ round-robin upstream
+  ├──► Backend A @ 10.7.11.100:3001
+  └──► Backend B @ 10.7.15.153:3002</div>
+      <div class="fig-cap">Fig. 1. Normal request flow (Phase 2).</div>
+    </div>
+
+    <h3>D. TLS Certificate Chain</h3>
+    <p class="noindent">
+      A 4096-bit RSA root CA was generated on Mac 2. The server certificate is a 2048-bit
+      RSA leaf signed by the CA with Subject Alternative Names
+      <code>DNS:app.Kuch_Nahi.test</code> and <code>DNS:api.Kuch_Nahi.test</code>,
+      plus <code>extendedKeyUsage=serverAuth</code>. The CA was added to the macOS System
+      Keychain on all four Macs via <code>security add-trusted-cert</code>, enabling
+      <code>/usr/bin/curl</code> to verify the certificate without <code>-k</code>.
+    </p>
+
+    <!-- ── III. PHASE 2 EXTENSIONS ── -->
+    <h2><span class="sec-num">III.</span> Phase 2 Extensions and Results</h2>
+
+    <h3>A. Backup DNS (Extension A)</h3>
+    <p class="noindent">
+      <strong>Objective.</strong> Eliminate the DNS layer as a single point of failure.
+    </p>
+    <p>
+      <strong>Implementation.</strong> An identical dnsmasq instance was deployed on Mac 4
+      (10.7.15.153:53) with the same A-records as the primary. All Macs were configured
+      with two DNS resolver addresses:
+    </p>
+    <pre>sudo networksetup -setdnsservers "Wi-Fi" \
+  10.7.6.152 10.7.15.153</pre>
+    <p>
+      <strong>Experiment.</strong> Ayush issued <code>dig app.Kuch_Nahi.test</code> (confirmed
+      <code>SERVER: 10.7.6.152</code>), then Hardik stopped dnsmasq. Without any client
+      reconfiguration, macOS's resolver automatically retried via the second entry.
+    </p>
+    <p>
+      <strong>Result.</strong> The subsequent dig returned <code>SERVER: 10.7.15.153</code>
+      with the correct answer 10.7.31.75. The website remained available throughout.
+      Failover latency was imperceptible (&lt;2 s timeout before retry).
+    </p>
+    <p>
+      <strong>Key insight.</strong> A DNS failure (SERVFAIL / timeout) differs fundamentally
+      from a backend failure (502 Bad Gateway): DNS failure prevents TCP from opening;
+      backend failure manifests only at Layer 7 after a successful TCP+TLS session.
+    </p>
+
+    <h3>B. TTL and DNS Cutover (Extension B &amp; E)</h3>
+    <p class="noindent">
+      <strong>Objective.</strong> Migrate all client traffic from the primary nginx edge
+      (Mac 2) to the standby edge (Mac 3) using only a DNS record change, and demonstrate
+      TTL-driven cache expiry in real time.
+    </p>
+    <p>
+      <strong>Implementation.</strong> Kabir deployed nginx on Mac 3 with the same upstream
+      pool, identical TLS certificates (AirDropped from Mac 2), and <code>X-Edge:
+      standby-mac3</code> response header. Hardik's dnsmasq TTL was set to 30 seconds.
+    </p>
+    <p>
+      <strong>Experiment.</strong> Ayush ran a continuous ping loop against
+      <code>app.Kuch_Nahi.test</code>. Hardik changed the dnsmasq A-record from
+      10.7.31.75 to 10.7.11.100. Hardik's own curl immediately returned
+      <code>X-Edge: standby-mac3</code> (no cached answer), while Ayush's loop
+      continued resolving 10.7.31.75 for approximately 30 seconds before switching.
+    </p>
+    <p>
+      <strong>Cache flush demo.</strong> After restoring the original record, Ayush
+      flushed her OS resolver cache (<code>dscacheutil -flushcache; killall -HUP
+      mDNSResponder</code>); the loop switched IP immediately without waiting for TTL.
+    </p>
+    <p>
+      <strong>Result.</strong> Two clients simultaneously resolved the same hostname
+      to different IPs, directly visualising TTL cache staleness. Edge cutover completed
+      within one TTL window (≤30 s). This confirms DNS-based blue-green deployment
+      semantics at LAN scale.
+    </p>
+
+    <h3>C. Backend Failover (Extension D)</h3>
+    <p class="noindent">
+      <strong>Objective.</strong> Demonstrate automatic, transparent failover when one
+      backend becomes unavailable.
+    </p>
+    <p>
+      <strong>Implementation.</strong> The nginx upstream block was updated with health
+      parameters:
+    </p>
+    <pre>upstream backend {
+  server 10.7.11.100:3001
+    max_fails=1 fail_timeout=10s;
+  server 10.7.15.153:3002
+    max_fails=1 fail_timeout=10s;
+}</pre>
+    <p>
+      <strong>Experiment.</strong> Ayush ran a 6-request loop through the HTTPS edge,
+      confirming alternating <code>X-Backend: A / B</code> headers. Kabir then terminated
+      Backend A. The loop was re-run immediately.
+    </p>
+    <p>
+      <strong>Result.</strong> Every response in the post-failure loop returned
+      <code>X-Backend: B</code> with HTTP 200; zero 5xx errors were observed. After
+      Kabir restarted Backend A and approximately 10 seconds elapsed, alternation resumed
+      automatically. This confirms that <code>proxy_next_upstream</code> retried the
+      failed connection on the surviving upstream within the same request cycle.
+    </p>
+
+    <h3>D. Firewall Backend Isolation (Extension C)</h3>
+    <p class="noindent">
+      <strong>Objective.</strong> Enforce zero-trust network segmentation so that backend
+      ports (3001, 3002) are reachable only from the authorised nginx edge (10.7.31.75).
+    </p>
+    <p>
+      <strong>Implementation.</strong> Kabir and Ayush applied pf rules on Mac 3 and Mac 4
+      respectively:
+    </p>
+    <pre># Mac 3 — protects port 3001
+pass in quick on lo0 all
+pass in quick proto tcp \
+  from 10.7.31.75 to any port 3001
+block in quick proto tcp \
+  from any to any port 3001</pre>
+    <p>
+      An analogous ruleset was applied on Mac 4 for port 3002.
+    </p>
+    <p>
+      <strong>Experiment.</strong> Before enabling pf, Hardik (Mac 1) curled both backends
+      directly—both returned <code>200 OK</code>. After enabling pf, Hardik's curls timed
+      out after 5 s (<code>curl: (28) Connection timed out</code>). Abuzar (Mac 2) curled
+      both backends—both returned <code>200 OK</code> (whitelisted). Hardik then curled via
+      HTTPS edge—<code>200 OK</code>, confirming end-users are unaffected.
+    </p>
+    <p>
+      <strong>Result.</strong> LAN-level zero-trust backend isolation was successfully
+      demonstrated. The pattern is equivalent to AWS Security Groups restricting inbound
+      traffic to the Application Load Balancer's security group only.
+    </p>
+
+    <!-- ── IV. TROUBLESHOOTING ── -->
+    <h2><span class="sec-num">IV.</span> Troubleshooting Methodology</h2>
+
+    <p class="noindent">
+      The team adopted a strict layer-by-layer diagnosis protocol, summarised in Table III.
+      Skipping layers was explicitly avoided; each layer was confirmed healthy before
+      ascending to the next.
+    </p>
+
+    <div class="tbl-wrap">
+      <div class="tbl-cap">TABLE III &mdash; Layer-by-Layer Diagnosis Commands</div>
+      <table>
+        <tr><th>Layer</th><th>Command</th><th>Pass Condition</th></tr>
+        <tr><td>LAN/IP</td><td><code>ping &lt;IP&gt;</code></td><td>0% packet loss</td></tr>
+        <tr><td>DNS</td><td><code>dig app.Kuch_Nahi.test</code></td><td>Answer: 10.7.31.75</td></tr>
+        <tr><td>TCP</td><td><code>nc -vz app.Kuch_Nahi.test 8443</code></td><td>Connection succeeded</td></tr>
+        <tr><td>TLS</td><td><code>curl -v https://…:8443/</code></td><td>No certificate error</td></tr>
+        <tr><td>App</td><td><code>curl -i https://…:8443/api/status</code></td><td>HTTP 200</td></tr>
+      </table>
+    </div>
+
+    <div class="tbl-wrap">
+      <div class="tbl-cap">TABLE IV &mdash; Real Faults Diagnosed During Phase 2</div>
+      <table>
+        <tr><th>Fault</th><th>Symptom</th><th>Fix</th></tr>
+        <tr>
+          <td>Missing X-Edge header</td>
+          <td>No header in response</td>
+          <td>Kabir updated standby nginx config and reloaded</td>
+        </tr>
+        <tr>
+          <td>TLS error on standby IP</td>
+          <td>Certificate name mismatch</td>
+          <td>Used DNS cutover instead of direct IP; cert has DNS SANs only</td>
+        </tr>
+        <tr>
+          <td>Conda curl ignoring CA</td>
+          <td>No cert error (false pass)</td>
+          <td>Switched to <code>/usr/bin/curl --cacert</code></td>
+        </tr>
+        <tr>
+          <td>pf already disabled (Ayush)</td>
+          <td>pfctl -d fails</td>
+          <td>Expected; restored to identical disabled state</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ── V. CLOUD EQUIVALENT MAPPING ── -->
+    <h2><span class="sec-num">V.</span> Cloud Equivalent Mapping</h2>
+
+    <div class="tbl-wrap">
+      <div class="tbl-cap">TABLE V &mdash; Lab-to-Cloud Component Mapping</div>
+      <table>
+        <tr><th>Lab Component</th><th>AWS Equivalent</th><th>GCP Equivalent</th></tr>
+        <tr><td>dnsmasq (Mac 1)</td><td>Route 53 Private Zone</td><td>Cloud DNS Private Zone</td></tr>
+        <tr><td>nginx (Mac 2)</td><td>ALB / CloudFront</td><td>Cloud Load Balancer</td></tr>
+        <tr><td>Backend A (Mac 3 :3001)</td><td>EC2 / ECS Task</td><td>Cloud Run instance</td></tr>
+        <tr><td>Backend B (Mac 4 :3002)</td><td>EC2 / ECS Task</td><td>Cloud Run instance</td></tr>
+        <tr><td>pf firewall rules</td><td>Security Groups</td><td>VPC Firewall Rules</td></tr>
+        <tr><td>Backup DNS (Mac 4)</td><td>Route 53 failover routing</td><td>Cloud DNS failover</td></tr>
+        <tr><td>Self-signed CA</td><td>ACM Private CA</td><td>Certificate Authority Service</td></tr>
+        <tr><td>DNS TTL cutover</td><td>Weighted/failover routing</td><td>Traffic Director</td></tr>
+      </table>
+    </div>
+
+    <!-- ── VI. DISCUSSION ── -->
+    <h2><span class="sec-num">VI.</span> Discussion</h2>
+
+    <h3>A. Remaining Single Point of Failure</h3>
+    <p class="noindent">
+      The primary nginx edge (Mac 2 / 10.7.31.75) remains the single point of failure.
+      The standby edge (Mac 3) is live and tested, but cutover is manual—requiring Hardik
+      to edit the dnsmasq A-record. Automated health-check-driven DNS failover (e.g.,
+      Route 53 health checks) would remove this dependency and reduce mean-time-to-recovery
+      from ~30 s (manual + TTL) to near-zero.
+    </p>
+
+    <h3>B. TTL Implications for Real Deployments</h3>
+    <p class="noindent">
+      The 30-second TTL was chosen for demonstration speed. Production systems typically
+      use 300–3600 s, requiring TTL to be lowered 24–48 hours before a planned migration.
+      Our experiment directly visualised this trade-off: longer TTLs reduce DNS server
+      load but increase client staleness during cutover.
+    </p>
+
+    <h3>C. TLS Without a Public CA</h3>
+    <p class="noindent">
+      The self-signed CA approach is functionally equivalent to an internal enterprise CA.
+      The <code>extendedKeyUsage=serverAuth</code> extension and proper SAN entries
+      ensured that macOS and <code>/usr/bin/curl</code> validated the certificate correctly
+      via the System Keychain. Homebrew's <code>curl</code>, which uses its own CA bundle,
+      required the explicit <code>--cacert</code> flag—a subtle but important difference
+      exposed during troubleshooting.
+    </p>
+
+    <!-- ── VII. CONCLUSION ── -->
+    <h2><span class="sec-num">VII.</span> Conclusion</h2>
+
+    <p>
+      This paper demonstrated that production-grade resilience patterns—backup DNS,
+      DNS-TTL-driven edge migration, upstream health-check failover, and zero-trust backend
+      isolation—can be reproduced and evaluated at laboratory scale with commodity hardware
+      and open-source software. Each Phase 2 extension addressed a specific single point of
+      failure identified in Phase 1 and was validated with live, reproducible demonstrations.
+    </p>
+    <p>
+      The most significant observation is that failures at different OSI layers produce
+      fundamentally different symptoms and require different diagnostic tools. A structured
+      layer-by-layer methodology proved essential for rapid fault isolation. These principles
+      scale directly to cloud environments, where the same patterns manifest as Route 53
+      failover routing, ALB health checks, and Security Group isolation.
+    </p>
+
+    <!-- ── VIVA Q&A ── -->
+    <h2><span class="sec-num">VIII.</span> Viva Q&amp;A</h2>
+
+    <h3>Q1: Why did <code>dig</code> show the new IP while <code>ping</code> showed the old one?</h3>
+    <p class="noindent">
+      <code>dig</code> sends a fresh UDP query to the DNS server, bypassing the OS resolver
+      cache. <code>ping</code> resolves through the OS cache, which retains the old answer
+      until the TTL (30 s) elapses. This is why the ping loop was used to visualise cache
+      expiry in real time.
+    </p>
+
+    <h3>Q2: DNS failure vs. backend failure?</h3>
+    <p class="noindent">
+      DNS failure: name does not resolve; TCP cannot open. Backend failure: DNS resolves,
+      TCP connects to nginx on 8443, but nginx cannot reach the backend and returns
+      <code>502 Bad Gateway</code>. The network layer is healthy; the application layer is broken.
+    </p>
+
+    <h3>Q3: Single point of failure and its mitigation?</h3>
+    <p class="noindent">
+      The nginx HTTPS edge on Mac 2. Mitigation: standby nginx on Mac 3 (10.7.11.100)
+      with DNS cutover. With TTL=30 s, full failover completes within 30 seconds of the
+      dnsmasq A-record change.
+    </p>
+
+    <h3>Q4: Where does TCP end and TLS begin?</h3>
+    <p class="noindent">
+      TCP ends after the 3-way handshake (SYN → SYN-ACK → ACK). TLS begins immediately
+      after with <code>ClientHello</code>. In Wireshark: <code>tcp.flags.syn==1</code>
+      shows the handshake; <code>tls.handshake</code> shows ClientHello, ServerHello,
+      and Certificate. Application data (<code>GET /api/status</code>) is sent only after
+      the TLS <code>Finished</code> exchange.
+    </p>
+
+    <!-- ── REFERENCES ── -->
+    <h2>References</h2>
+    <div class="references">
+      <p>[1] nginx Inc., "nginx documentation," 2024. [Online]. Available: https://nginx.org/en/docs/</p>
+      <p>[2] S. Kelsey, "dnsmasq — a lightweight DHCP and caching DNS server," 2024. [Online]. Available: https://thekelleys.org.uk/dnsmasq/doc.html</p>
+      <p>[3] OpenSSL Project, "OpenSSL cryptography and SSL/TLS toolkit," 2024. [Online]. Available: https://www.openssl.org/docs/</p>
+      <p>[4] Apple Inc., "macOS Packet Filter (pf) man page," macOS 14 Sonoma, 2024.</p>
+      <p>[5] R. Fielding and J. Reschke, "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing," RFC 7230, IETF, 2014.</p>
+      <p>[6] E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.3," RFC 8446, IETF, 2018.</p>
+      <p>[7] P. Mockapetris, "Domain Names — Concepts and Facilities," RFC 1034, IETF, 1987.</p>
+      <p>[8] Team Kuch Nahi, "CN-PROJECT-KUCH_NAHI — Project Repository," GitHub, Nov. 2026. [Online]. Available: https://github.com/Kidrah-kun/CN-PROJECT-KUCH_NAHI</p>
+    </div>
+
+  </div><!-- .columns -->
+</div><!-- .page -->
+</body>
+</html>

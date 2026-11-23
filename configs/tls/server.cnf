@@ -51,6 +51,7 @@ CN = app.Kuch_Nahi.test
 
 [req_ext]
 subjectAltName = @alt_names
+extendedKeyUsage = serverAuth
 
 [alt_names]
 DNS.1 = app.Kuch_Nahi.test
