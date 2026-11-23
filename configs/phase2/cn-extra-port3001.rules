@@ -1,0 +1,23 @@
+# pf (Packet Filter) Rules — Backend A Firewall (Mac 3 / Kabir Sharma)
+# Computer Networks Project — Team Kuch_Nahi — Phase 2 Extension C
+# Machine: Mac 3 — 10.7.11.100 — port 3001
+#
+# Purpose: Allow only Abuzar's nginx edge (10.7.31.75) to reach
+#   Backend A on port 3001. All other hosts (including Hardik's
+#   Mac 1 and Ayush's Mac 4) are blocked from direct access.
+#
+# How to apply:
+#   cp /etc/pf.conf ~/pf.conf.backup
+#   cat /etc/pf.conf ~/cn-extra.rules > ~/pf-cn.conf
+#   sudo pfctl -f ~/pf-cn.conf
+#   sudo pfctl -E
+#
+# How to restore:
+#   sudo pfctl -f ~/pf.conf.backup
+#   (only run pfctl -d if pf was Disabled before — Kabir's was Enabled)
+# ─────────────────────────────────────────────────────────────
+
+pass in quick on lo0 all
+pass in quick proto tcp from 10.7.31.75 to any port 3001
+block in quick proto tcp from any to any port 3001
+
